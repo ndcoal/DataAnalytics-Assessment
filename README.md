@@ -30,10 +30,10 @@ Identify customers who have both a funded **savings plan** (`is_regular_savings 
 **Approach:** 
 
 - An initial table was created to identify funded savings plans by joining plans_plan and savings_savingsaccount, filtering for regular savings (is_regular_savings = 1) with confirmed amounts greater than zero.
--Then, a second table was created for funded investment plans (is_a_fund = 1) with similar conditions.
--Next, both tables were joined on owner_id to find users with at least one of each plan type.
--A separate table summed all confirmed deposits for each user (converted from kobo to naira).
--Finally, active users (is_account_deleted = 0) were selected, and results were ordered by total deposits.
+- Then, a second table was created for funded investment plans (is_a_fund = 1) with similar conditions.
+- Next, both tables were joined on owner_id to find users with at least one of each plan type.
+- A separate table summed all confirmed deposits for each user (converted from kobo to naira).
+- Finally, active users (is_account_deleted = 0) were selected, and results were ordered by total deposits.
 
 **Assumptions:**  
 - Confirmed savings (`confirmed_amount > 0`) indicates funding.
