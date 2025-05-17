@@ -35,11 +35,6 @@ Identify customers who have both a funded **savings plan** (`is_regular_savings 
 - A separate table summed all confirmed deposits for each user (converted from kobo to naira).
 - Finally, active users (is_account_deleted = 0) were selected, and results were ordered by total deposits.
 
-**Assumptions:**  
-- Confirmed savings (`confirmed_amount > 0`) indicates funding.
-- All monetary values are in kobo.
-- Customers must be active (i.e., not deleted).
-
 ---
 
 ### Assessment_Q2.sql - Transaction Frequency Analysis
@@ -57,10 +52,6 @@ Segment customers based on how frequently they transact per month.
   - Low Frequency (≤ 2/month)
 - Finally, the number of users and average transactions per month were aggregated per category.
 
-**Assumptions:**  
-- Transactions considered are only confirmed savings deposits.
-- Tenure is calculated from first transaction to current date.
-
 ---
 
 ### Assessment_Q3.sql - Account Inactivity Alert
@@ -74,10 +65,6 @@ Identify active savings or investment plans with no deposits in the last 365 day
 - Plans with no transactions in the last 365 days were filtered.
 - Each plan was labeled as either "Savings" (is_regular_savings = 1) or "Investment" (is_a_fund = 1).
 - Only active plans belonging to active users were included in the final result.
-
-**Assumptions:**  
-- Inactivity is based only on absence of confirmed savings transactions.
-- Both plan types are included: savings and investments.
 
 ---
 
@@ -96,29 +83,13 @@ Estimate each customer's CLV based on transaction volume and tenure.
 
 ---
 
-## Challenges
+### Challenges
 
-- Ensuring accuracy in filtering only active, valid transactions.
-- Handling edge cases like zero-month tenure or missing transaction dates.
-- Interpreting business rules correctly (e.g., what defines a funded plan or inactive account).
-- Converting amounts stored in kobo to naira for meaningful financial reporting.
-
-
-**Assumptions:**  
-- CLV is based only on inflow transactions.
-- Customers with deleted accounts are excluded.
+One of the main challenges was ensuring accuracy in filtering only active, valid transactions, particularly distinguishing confirmed deposits and valid user accounts, requiring me to creat multiple temporary table before joining them. Handling cases like users with zero-month tenure or missing transaction dates also required attention to avoid division errors or misleading calculations. However, overall, the process went smoothly, and writing the queries was relatively easy given the helpful hints provided regarding confirmed_amount, amount_withdrawn, savings_plan, and investment_plan.
 
 ---
 
-## Challenges Encountered
-
-- **Null division handling:** Used `NULLIF(..., 0)` to avoid division-by-zero errors in average calculations.
-- **Transaction vs Plan distinction:** Carefully handled logic where savings transactions are linked to specific plan types.
-- **Unit assumptions:** All currency fields are in kobo unless specified; did not convert to naira as the assessment didn't request it.
-
----
-
-## Summary
+### Summary
 
 This assessment showcased my ability to reason through business logic, translate it into SQL queries, and ensure performance and correctness. Each SQL file is structured, readable, and commented where needed. With this, i look forward to be part of the selected individual to to contribute to Cowrywise.
 
